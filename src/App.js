@@ -8,12 +8,10 @@ const FourOFour = () => <h1> Eror 404, Not found... </h1>;
 
 const App = () => (
   <Provider store={store}>
-    <div className="app">
-      <Switch>
-        <Route exact path="/" component={Main} />
-        <Route component={FourOFour} />
-      </Switch>
-    </div>
+    <Switch>
+      <Route exatc path="/" component={Main} />
+      <Route component={FourOFour} />
+    </Switch>
   </Provider>
 );
 

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import { addTodoAction } from "../actions/todoAction";
 
 class Todo extends Component {
@@ -8,9 +7,17 @@ class Todo extends Component {
     super(props);
 
     this.state = {
-      value: ""
+      value: "",
+      toggle: false
     };
   }
+
+  show(e) {
+    this.setState({
+      toggle: !this.state.toggle
+    });
+  }
+
   handleChange(event) {
     this.setState({
       value: event.target.value
@@ -25,20 +32,49 @@ class Todo extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
+        <hr />
         <form onSubmit={this.handleSubmit.bind(this)}>
-          <label>Name</label>
-          <input
-            type="text"
-            placeholder="Masukan Text"
-            onChange={this.handleChange.bind(this)}
-            value={this.state.value}
-          />
-          <button> Add Todo </button>
+          <div className="form-group">
+            <div className="input-group">
+              <span className="input-group-btn">
+                <button className="btn btn-secondary" type="submit">
+                  Add!
+                </button>
+              </span>
+              <input
+                className="form-control"
+                type="text"
+                placeholder="Insert Name"
+                onChange={this.handleChange.bind(this)}
+                value={this.state.value}
+              />
+            </div>
+          </div>
         </form>
+        <hr />
+        <button className="btn btn-primary" onClick={this.show.bind(this)}>
+          show/hide
+        </button>
         {this.props.todo.map((node, index) => (
           <div key={index}>
-            {node.text}, {node.createdAt}, {node.name}
+            <ul>
+              <li>
+                <p>{node.name}</p>
+              </li>
+            </ul>
+            {this.state.toggle ? (
+              <div>
+                <p> id : {node.id}</p>
+                <p> name : {node.name}</p>
+                <p>
+                  text : {node.text}, by {node.name}
+                </p>
+                <p> createdAt : {node.createdAt}</p>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
         ))}
       </div>
