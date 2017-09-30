@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import Collapsible from "react-collapsible";
 import { addTodoAction } from "../actions/todoAction";
 
 class Todo extends Component {
@@ -7,17 +8,9 @@ class Todo extends Component {
     super(props);
 
     this.state = {
-      value: "",
-      toggle: false
+      value: ""
     };
   }
-
-  show(e) {
-    this.setState({
-      toggle: !this.state.toggle
-    });
-  }
-
   handleChange(event) {
     this.setState({
       value: event.target.value
@@ -53,28 +46,20 @@ class Todo extends Component {
           </div>
         </form>
         <hr />
-        <button className="btn btn-primary" onClick={this.show.bind(this)}>
-          show/hide
-        </button>
         {this.props.todo.map((node, index) => (
-          <div key={index}>
-            <ul>
-              <li>
-                <p>{node.name}</p>
-              </li>
-            </ul>
-            {this.state.toggle ? (
-              <div>
-                <p> id : {node.id}</p>
-                <p> name : {node.name}</p>
-                <p>
-                  text : {node.text}, by {node.name}
-                </p>
-                <p> createdAt : {node.createdAt}</p>
-              </div>
-            ) : (
-              ""
-            )}
+          <div key={index} className="card">
+            <div className="card-header">
+              <Collapsible trigger={node.name}>
+                <div className="card-body">
+                  <p>
+                    {node.text} by, {node.name}
+                  </p>
+                  <p>
+                    <small className="text-muted">{node.createdAt}</small>
+                  </p>
+                </div>
+              </Collapsible>
+            </div>
           </div>
         ))}
       </div>
